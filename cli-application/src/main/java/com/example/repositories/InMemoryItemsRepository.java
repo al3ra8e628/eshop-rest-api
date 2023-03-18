@@ -1,31 +1,44 @@
 package com.example.repositories;
 
 import com.example.contract.repositories.ItemsRepository;
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.modals.Item;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Repository
 public class InMemoryItemsRepository implements ItemsRepository {
 
     private Map<Long, Item> itemsTable = new HashMap<>();
 
     @Override
     public Item save(Item item) {
-        Long nextVal = itemsTable.keySet()
-                .stream()
-                .max(Long::compareTo)
-                .orElse(0L) + 1;
+        if(Objects.isNull(item.getId())) {
+            item.setId(itemsTable
+                    .keySet()
+                    .stream()
+                    .max(Long::compareTo)
+                    .orElse(0L) + 1);
+        }
 
-        item.setId(nextVal);
-
-        return itemsTable.put(nextVal, item);
+        return itemsTable.put(item.getId(), item);
     }
 
+    @Override
     public List<Item> listAll() {
         return new ArrayList<>(itemsTable.values());
+    }
+
+    @Override
+    public Item findById(Long id) {
+        final Item item = itemsTable.get(id);
+
+        if (Objects.isNull(item)) {
+            throw new ResourceNotFoundException();
+        }
+
+        return item;
     }
 
 }

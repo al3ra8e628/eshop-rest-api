@@ -1,8 +1,9 @@
 package com.example.validators;
 
-import com.example.contract.requests.CreateItemRequest;
+import com.example.contract.requests.ItemRequest;
 import com.example.exceptions.DomainValidationException;
 import com.example.exceptions.DomainValidationException.ValidationErrorDetails;
+import com.example.modals.ItemCategory;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -32,25 +33,29 @@ import static com.example.exceptions.DomainValidationException.ValidationErrorDe
  * */
 
 
-public class CreateItemRequestValidator {
+public abstract class ItemRequestValidator<T extends ItemRequest> {
 
-    public void validate(CreateItemRequest createItemRequest) {
+    public void validate(T request) {
         final Set<ValidationErrorDetails> validationErrors = new HashSet<>();
 
-        if (Objects.isNull(createItemRequest.getCategory())) {
+        if (Objects.isNull(getCategory(request))) {
             validationErrors.add(of(CATEGORY_FIELD_NAME, VALUE_REQUIRED_ERROR_MESSAGE));
         }
 
-        if (!hasValidRatingValueRange(createItemRequest)) {
+        if (!hasValidRatingValueRange(request)) {
             validationErrors.add(of(RATING_FIELD_NAME, INVALID_RATING_VALUE_RANGE));
         }
 
         throwIfHaveErrors(validationErrors);
     }
 
-    private static boolean hasValidRatingValueRange(CreateItemRequest createItemRequest) {
-        return Objects.isNull(createItemRequest.getRating()) || (createItemRequest.getRating() > 0 && createItemRequest.getRating() <= 5);
+    protected abstract int getRating(T itemRequest);
+    protected abstract ItemCategory getCategory(T request);
+
+    private boolean hasValidRatingValueRange(T itemRequest) {
+        return Objects.isNull(getRating(itemRequest)) || (getRating(itemRequest) > 0 && getRating(itemRequest) <= 5);
     }
+
 
     private void throwIfHaveErrors(Set<ValidationErrorDetails> validationErrors) {
         if (!validationErrors.isEmpty()) {

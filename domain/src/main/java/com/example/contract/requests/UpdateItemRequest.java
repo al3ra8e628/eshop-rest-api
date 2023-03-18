@@ -10,9 +10,9 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode
-public class CreateItemRequest implements ItemRequest {
+public class UpdateItemRequest implements ItemRequest {
+    private Long id;
     private String name;
-
     private ItemCategory category;
     private Boolean isInStock;
     private Integer rating;

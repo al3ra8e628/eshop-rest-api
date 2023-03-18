@@ -5,7 +5,7 @@ import com.example.contract.requests.CreateItemRequest;
 import com.example.contract.responses.CreateItemResponse;
 import com.example.mappers.ItemDomainMapper;
 import com.example.modals.Item;
-import com.example.validators.CreateItemRequestValidator;
+import com.example.validators.ItemRequestValidator;
 
 import java.time.LocalDateTime;
 
@@ -23,11 +23,11 @@ import java.time.LocalDateTime;
  *
  * */
 public class CreateItemUseCase {
-    private final CreateItemRequestValidator requestValidator;
+    private final ItemRequestValidator<CreateItemRequest> requestValidator;
     private final ItemDomainMapper itemDomainMapper;
     private final ItemsRepository itemsRepository;
 
-    public CreateItemUseCase(CreateItemRequestValidator requestValidator,
+    public CreateItemUseCase(ItemRequestValidator<CreateItemRequest> requestValidator,
                              ItemDomainMapper itemDomainMapper,
                              ItemsRepository itemsRepository) {
         this.requestValidator = requestValidator;
