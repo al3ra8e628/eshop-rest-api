@@ -4,6 +4,7 @@ import com.example.contract.repositories.ItemsRepository;
 import com.example.contract.requests.CreateItemRequest;
 import com.example.contract.requests.UpdateItemRequest;
 import com.example.exceptions.DomainValidationException;
+import com.example.modals.Item;
 import com.example.modals.ItemCategory;
 import com.example.modals.ItemUnit;
 import com.example.usecases.CreateItemUseCase;
@@ -14,12 +15,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Main {
     public static void main(String[] args) {
-        final ApplicationContext context = new AnnotationConfigApplicationContext(
-                "com.example");
+        final ApplicationContext context = new AnnotationConfigApplicationContext("com.example");
 
         final CreateItemUseCase createItemUseCase = context.getBean(CreateItemUseCase.class);
         final UpdateItemUseCase updateItemUseCase = context.getBean(UpdateItemUseCase.class);
-
         final ItemsRepository itemsRepository = context.getBean(ItemsRepository.class);
 
         //restAPI request body...
@@ -40,11 +39,10 @@ public class Main {
         secondItem.setIsInStock(true);
         secondItem.setUnit(ItemUnit.PIECE);
 
-
         //api exception handler...
         try {
             System.out.println("list existed items");
-            System.out.println(itemsRepository.listAll());
+            System.out.println(itemsRepository.listAll(new Item()));
 
             System.out.println("\ncreate two items");
             createItemUseCase.execute(firstItem);
@@ -52,7 +50,7 @@ public class Main {
 
 
             System.out.println("\nlist all items after creation");
-            itemsRepository.listAll().forEach(System.out::println);
+            itemsRepository.listAll(new Item()).forEach(System.out::println);
 
 
             System.out.println("\nupdate second item name and price details!!");
@@ -64,10 +62,11 @@ public class Main {
             updateItemRequest.setPrice(Money.parse("USD 150.00"));
             updateItemRequest.setIsInStock(true);
             updateItemRequest.setUnit(ItemUnit.PIECE);
+
             updateItemUseCase.execute(updateItemRequest);
 
             System.out.println("\nlist created items after update");
-            itemsRepository.listAll().forEach(System.out::println);
+            itemsRepository.listAll(new Item()).forEach(System.out::println);
         } catch (DomainValidationException e) {
             e.getValidationErrors().forEach(System.out::println);
         }

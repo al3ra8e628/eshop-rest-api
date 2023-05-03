@@ -1,7 +1,7 @@
-package com.example.repositories;
+package com.example.eshop.service.repositories;
 
 import com.example.contract.repositories.ItemsRepository;
-import com.example.exceptions.ResourceNotFoundException;
+import com.example.eshop.service.exceptions.ResourceNotFoundException;
 import com.example.modals.Item;
 import org.springframework.stereotype.Repository;
 
@@ -18,12 +18,17 @@ public class InMemoryItemsRepository implements ItemsRepository {
             item.setId(itemsTable.keySet().stream().max(Long::compareTo).orElse(0L) + 1);
         }
 
-        return itemsTable.put(item.getId(), item);
+        itemsTable.put(item.getId(), item);
+
+        return item;
     }
 
     @Override
     public List<Item> listAll(Item filterExample) {
-        return new ArrayList<>(itemsTable.values());
+        return new ArrayList<>(itemsTable.values().stream()
+                .filter(it -> Objects.isNull(filterExample.getCategory()) ||
+                        Objects.equals(filterExample.getCategory(), it.getCategory()))
+                .toList());
     }
 
     @Override
@@ -47,5 +52,4 @@ public class InMemoryItemsRepository implements ItemsRepository {
 
         return removed;
     }
-
 }
