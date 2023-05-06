@@ -4,17 +4,25 @@ package com.example.eshop.service.controllers;
 import com.example.contract.repositories.ItemsRepository;
 import com.example.contract.requests.CreateItemRequest;
 import com.example.contract.requests.UpdateItemRequest;
+import com.example.contract.responses.CreateItemResponse;
+import com.example.eshop.service.controllers.resources.CreateItemRequestResource;
+import com.example.eshop.service.controllers.resources.DocumentResponseResource;
 import com.example.eshop.service.controllers.resources.ItemResponseResource;
 import com.example.eshop.service.resourcemappers.ItemResourceMapper;
 import com.example.modals.Item;
 import com.example.usecases.CreateItemUseCase;
 import com.example.usecases.UpdateItemUseCase;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.SneakyThrows;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -24,25 +32,44 @@ public class ItemsController {
     private final CreateItemUseCase createItemUseCase;
     private final UpdateItemUseCase updateItemUseCase;
     private final ItemResourceMapper itemResourceMapper;
+    private final ObjectMapper objectMapper;
 
     public ItemsController(ItemsRepository itemsRepository,
                            CreateItemUseCase createItemUseCase,
                            UpdateItemUseCase updateItemUseCase,
-                           ItemResourceMapper itemResourceMapper) {
+                           ItemResourceMapper itemResourceMapper,
+                           ObjectMapper objectMapper) {
         this.itemsRepository = itemsRepository;
         this.createItemUseCase = createItemUseCase;
         this.updateItemUseCase = updateItemUseCase;
         this.itemResourceMapper = itemResourceMapper;
+        this.objectMapper = objectMapper;
     }
 
-
-    @PostMapping()
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "create a new eshop item.",
+            description = "create a new eshop item desc.")
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create a new eshop item.")
-    public ItemResponseResource createItem(@RequestBody CreateItemRequest itemRequest) {
-        return addResourceLinks(itemResourceMapper.toResource(
-                createItemUseCase.execute(itemRequest)
-        ));
+    public ItemResponseResource createItem(@RequestBody CreateItemRequestResource itemRequest) {
+        return createItem(
+                itemResourceMapper.toCreateItemRequest(itemRequest)
+        );
+    }
+
+    @SneakyThrows
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ItemResponseResource createItemWithPictures(@RequestPart("requestBody") String itemRequest,
+                                                       @RequestPart("pictures") List<MultipartFile> pictures) {
+        CreateItemRequest createItemRequest = itemResourceMapper.toCreateItemRequest(
+                objectMapper.readValue(itemRequest, CreateItemRequestResource.class));
+
+        createItemRequest.setPictures(pictures.stream()
+                .map(itemResourceMapper::toDocumentCreateRequest)
+                .collect(Collectors.toList())
+        );
+
+        return createItem(createItemRequest);
     }
 
     @GetMapping()
@@ -55,8 +82,10 @@ public class ItemsController {
 
     @GetMapping("/{id}")
     public ItemResponseResource getItemById(@PathVariable Long id) {
-        return this.itemResourceMapper.toResource(
-                itemsRepository.findById(id)
+        return this.addResourceLinks(
+                this.itemResourceMapper.toResource(
+                        itemsRepository.findById(id)
+                )
         );
     }
 
@@ -72,9 +101,9 @@ public class ItemsController {
                                                @RequestBody UpdateItemRequest updateItemRequest) {
         updateItemRequest.setId(id);
 
-        return itemResourceMapper.toResource(
+        return this.addResourceLinks(itemResourceMapper.toResource(
                 updateItemUseCase.execute(updateItemRequest)
-        );
+        ));
     }
 
     private ItemResponseResource addResourceLinks(ItemResponseResource resource) {
@@ -82,9 +111,22 @@ public class ItemsController {
                 .withType("GET")
                 .withSelfRel();
 
+        final Link listPictiresLink = Link.of(selfLink.getHref() + "/pictures")
+                .withType("GET")
+                .withRel("pictures");
+
         resource.add(selfLink);
+        resource.add(listPictiresLink);
 
         return resource;
+    }
+
+    private ItemResponseResource createItem(CreateItemRequest createItemRequest) {
+        final CreateItemResponse createItemResponse = createItemUseCase.execute(createItemRequest);
+
+        final ItemResponseResource itemResponseResource = itemResourceMapper.toResource(createItemResponse);
+
+        return addResourceLinks(itemResponseResource);
     }
 
 }

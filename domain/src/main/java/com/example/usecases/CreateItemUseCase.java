@@ -8,6 +8,7 @@ import com.example.modals.Item;
 import com.example.validators.ItemRequestValidator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /*
  * create item use case execution process
@@ -65,6 +66,10 @@ public class CreateItemUseCase {
 
     private void initializeSystemValues(Item item) {
         item.setCreationDateTime(LocalDateTime.now());
+
+        item.getPictures()
+                .forEach(it -> it.setReference(
+                        UUID.randomUUID().toString()));
     }
 
 }

@@ -16,6 +16,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.joda.money.Money;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class AppBeansConfig {
