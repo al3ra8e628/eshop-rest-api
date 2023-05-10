@@ -47,12 +47,12 @@ public class ItemPicturesController {
     @GetMapping(value = "/{reference}/download")
     public ResponseEntity<byte[]> downloadPicture(@PathVariable Long itemId,
                                                   @PathVariable String reference) {
-        final Document documentItemDocument = getDocumentItemDocument(itemId, reference);
-        byte[] content = documentItemDocument.getContent();
-        final HttpHeaders headers = new HttpHeaders();
+        final Document itemPicture = getDocumentItemDocument(itemId, reference);
 
-        headers.setContentType(MediaType.valueOf(
-                documentItemDocument.getContentType()));
+        final byte[] content = itemPicture.getContent();
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf(itemPicture.getContentType()));
 
         return new ResponseEntity<>(content, headers, HttpStatus.OK);
     }
@@ -60,12 +60,12 @@ public class ItemPicturesController {
     @GetMapping(value = "/{reference}/download", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> downloadPictureEncoded(@PathVariable Long itemId,
                                                       @PathVariable String reference) {
-        Document document = getDocumentItemDocument(itemId, reference);
-        byte[] content = document.getContent();
+        final Document document = getDocumentItemDocument(itemId, reference);
 
         final String base64Prefix = String.format("data:%s;base64,", document.getContentType());
 
-        return Map.of("content", base64Prefix.concat(Base64.getEncoder().encodeToString(content)));
+        return Map.of("content", base64Prefix.concat(
+                Base64.getEncoder().encodeToString(document.getContent())));
     }
 
     private Document getDocumentItemDocument(Long itemId, String reference) {
