@@ -7,11 +7,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.joda.money.Money;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Relation(collectionRelation = "resources")
 @Schema(name = "ItemResponseResource", description = "eshop item response details.")
 public class ItemResponseResource extends RepresentationModel<ItemResponseResource> {
 

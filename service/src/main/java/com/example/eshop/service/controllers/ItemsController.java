@@ -1,20 +1,24 @@
 package com.example.eshop.service.controllers;
 
 
-import com.example.contract.repositories.ItemsRepository;
 import com.example.contract.requests.CreateItemRequest;
 import com.example.contract.requests.UpdateItemRequest;
 import com.example.contract.responses.CreateItemResponse;
 import com.example.eshop.service.controllers.resources.CreateItemRequestResource;
 import com.example.eshop.service.controllers.resources.ItemResponseResource;
+import com.example.eshop.service.repositories.jpa.specifications.ItemsSpecifications;
+import com.example.eshop.service.repositories.lsitingrepositories.ItemsListingRepository;
 import com.example.eshop.service.resourcemappers.ItemResourceMapper;
-import com.example.modals.Item;
 import com.example.usecases.CreateItemUseCase;
 import com.example.usecases.UpdateItemUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.SneakyThrows;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,21 +31,24 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/items")
 public class ItemsController {
-    private final ItemsRepository itemsRepository;
+    private final ItemsListingRepository itemsRepository;
     private final CreateItemUseCase createItemUseCase;
     private final UpdateItemUseCase updateItemUseCase;
     private final ItemResourceMapper itemResourceMapper;
+    private final PagedResourcesAssembler pagedResourcesAssembler;
     private final ObjectMapper objectMapper;
 
-    public ItemsController(ItemsRepository itemsRepository,
+    public ItemsController(ItemsListingRepository itemsRepository,
                            CreateItemUseCase createItemUseCase,
                            UpdateItemUseCase updateItemUseCase,
                            ItemResourceMapper itemResourceMapper,
+                           PagedResourcesAssembler pagedResourcesAssembler,
                            ObjectMapper objectMapper) {
         this.itemsRepository = itemsRepository;
         this.createItemUseCase = createItemUseCase;
         this.updateItemUseCase = updateItemUseCase;
         this.itemResourceMapper = itemResourceMapper;
+        this.pagedResourcesAssembler = pagedResourcesAssembler;
         this.objectMapper = objectMapper;
     }
 
@@ -72,12 +79,14 @@ public class ItemsController {
     }
 
     @GetMapping()
-    public List<ItemResponseResource> listAllItems(Item filterExample) {
-        return itemsRepository.listAll(filterExample)
-                .stream()
+    public PagedModel<ItemResponseResource> listAllItems(ItemsSpecifications specs,
+                                                         Pageable pageable) {
+        final Page<ItemResponseResource> responsePage = itemsRepository
+                .listAll(specs, pageable)
                 .map(itemResourceMapper::toResource)
-                .map(this::addResourceLinks)
-                .toList();
+                .map(this::addResourceLinks);
+
+        return pagedResourcesAssembler.toModel(responsePage);
     }
 
     @GetMapping("/{id}")

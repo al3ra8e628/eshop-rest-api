@@ -1,13 +1,16 @@
 package com.example.eshop.service.repositories.jpa.adapters;
 
 
-import com.example.contract.repositories.ItemsRepository;
 import com.example.eshop.service.repositories.jpa.JpaItemsRepository;
 import com.example.eshop.service.repositories.jpa.entities.ItemEntity;
 import com.example.eshop.service.repositories.jpa.mappers.ItemEntityMapper;
+import com.example.eshop.service.repositories.jpa.specifications.ItemsSpecifications;
+import com.example.eshop.service.repositories.lsitingrepositories.ItemsListingRepository;
 import com.example.modals.Item;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @Profile("jpa")
-public class JpaItemsRepositoryAdapter implements ItemsRepository {
+public class JpaItemsRepositoryAdapter implements ItemsListingRepository {
     final JpaItemsRepository jpaItemsRepository;
     final ItemEntityMapper itemEntityMapper;
 
@@ -43,6 +46,12 @@ public class JpaItemsRepositoryAdapter implements ItemsRepository {
         return itemEntities.stream()
                 .map(itemEntityMapper::toDomain)
                 .collect(Collectors.toList());
+    }
+
+    public Page<Item> listAll(ItemsSpecifications specs, Pageable pageable) {
+        final Page<ItemEntity> itemEntitiesPage = jpaItemsRepository.findAll(specs, pageable);
+
+        return itemEntitiesPage.map(itemEntityMapper::toDomain);
     }
 
     @Override

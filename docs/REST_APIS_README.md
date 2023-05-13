@@ -105,3 +105,16 @@ request body:
 - File Uploading.
 - file downloading base64.
 - file downloading octet stream.
+
+
+
+pagination with filtering call:
+`http://localhost:8081/api/v1/items?size=5&page=5&category=GROCERY`
+size: page size.
+page: page number.
+category is a normal filter.
+
+
+
+sorting with multi sorting level:
+http://localhost:8081/api/v1/items?size=5&sort=category,asc&sort=rating,desc
