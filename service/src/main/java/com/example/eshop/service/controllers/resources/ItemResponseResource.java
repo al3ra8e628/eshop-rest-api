@@ -17,8 +17,7 @@ public class ItemResponseResource extends RepresentationModel<ItemResponseResour
 
     private Long id;
     private String name;
-    private String identifier;
-    private ItemCategory responseCategory;
+    private ItemCategory category;
     private Boolean isInStock;
     private Integer rating;
     private ItemUnit unit;

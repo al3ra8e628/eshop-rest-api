@@ -76,6 +76,7 @@ public class ItemsController {
         return itemsRepository.listAll(filterExample)
                 .stream()
                 .map(itemResourceMapper::toResource)
+                .map(this::addResourceLinks)
                 .toList();
     }
 
