@@ -6,7 +6,6 @@ import com.example.contract.requests.CreateItemRequest;
 import com.example.contract.requests.UpdateItemRequest;
 import com.example.contract.responses.CreateItemResponse;
 import com.example.eshop.service.controllers.resources.CreateItemRequestResource;
-import com.example.eshop.service.controllers.resources.DocumentResponseResource;
 import com.example.eshop.service.controllers.resources.ItemResponseResource;
 import com.example.eshop.service.resourcemappers.ItemResourceMapper;
 import com.example.modals.Item;

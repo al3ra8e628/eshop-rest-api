@@ -1,13 +1,16 @@
-package com.example.eshop.service.repositories;
+package com.example.eshop.service.repositories.inmemory;
 
 import com.example.contract.repositories.ItemsRepository;
 import com.example.eshop.service.exceptions.ResourceNotFoundException;
 import com.example.modals.Item;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+
 @Repository
+@Profile("in-memory")
 public class InMemoryItemsRepository implements ItemsRepository {
 
     private Map<Long, Item> itemsTable = new HashMap<>();
