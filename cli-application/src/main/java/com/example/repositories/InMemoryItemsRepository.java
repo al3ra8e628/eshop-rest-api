@@ -3,6 +3,7 @@ package com.example.repositories;
 import com.example.contract.repositories.ItemsRepository;
 import com.example.exceptions.ResourceNotFoundException;
 import com.example.modals.Item;
+import com.example.modals.ItemCategory;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -46,6 +47,16 @@ public class InMemoryItemsRepository implements ItemsRepository {
         }
 
         return removed;
+    }
+
+    @Override
+    public Optional<Item> findByIdAndInStock(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Item> getAllItemsByCategory(ItemCategory itemCategory) {
+        return null;
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.eshop.service.repositories.inmemory;
 import com.example.contract.repositories.ItemsRepository;
 import com.example.eshop.service.exceptions.ResourceNotFoundException;
 import com.example.modals.Item;
+import com.example.modals.ItemCategory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
@@ -54,5 +55,15 @@ public class InMemoryItemsRepository implements ItemsRepository {
         }
 
         return removed;
+    }
+
+    @Override
+    public Optional<Item> findByIdAndInStock(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Item> getAllItemsByCategory(ItemCategory itemCategory) {
+        return null;
     }
 }

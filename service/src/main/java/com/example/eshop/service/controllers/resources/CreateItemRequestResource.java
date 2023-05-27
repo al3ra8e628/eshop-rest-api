@@ -15,6 +15,7 @@ public class CreateItemRequestResource {
     private Boolean isInStock;
     private Integer rating;
     private ItemUnit unit;
+    private String description;
 
     @Schema(type = "string",
             example = "USD 100.00",

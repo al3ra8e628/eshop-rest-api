@@ -6,9 +6,12 @@ import com.example.contract.requests.UpdateItemRequest;
 import com.example.contract.responses.CreateItemResponse;
 import com.example.eshop.service.controllers.resources.CreateItemRequestResource;
 import com.example.eshop.service.controllers.resources.ItemResponseResource;
+import com.example.eshop.service.exceptions.ResourceNotFoundException;
 import com.example.eshop.service.repositories.jpa.specifications.ItemsSpecifications;
 import com.example.eshop.service.repositories.lsitingrepositories.ItemsListingRepository;
 import com.example.eshop.service.resourcemappers.ItemResourceMapper;
+import com.example.modals.Item;
+import com.example.modals.ItemCategory;
 import com.example.usecases.CreateItemUseCase;
 import com.example.usecases.UpdateItemUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -97,6 +100,22 @@ public class ItemsController {
                 )
         );
     }
+
+    @GetMapping("/stock/{id}")
+    public ItemResponseResource getInStockItemById(@PathVariable Long id) {
+        return this.addResourceLinks(
+                this.itemResourceMapper.toResource(
+                        itemsRepository.findByIdAndInStock(id)
+                                .orElseThrow(ResourceNotFoundException::new)
+                )
+        );
+    }
+
+    @GetMapping("/all-by-category/{category}")
+    public List<Item> getAllByCategory(@PathVariable ItemCategory category) {
+        return itemsRepository.getAllItemsByCategory(category);
+    }
+
 
     @DeleteMapping("/{id}")
     public ItemResponseResource deleteById(@PathVariable Long id) {

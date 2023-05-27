@@ -18,6 +18,7 @@ public class CreateItemRequest implements ItemRequest {
     private Integer rating;
     private ItemUnit unit;
     private Money price;
+    private String description;
     private List<DocumentCreateRequest> pictures;
 
 }

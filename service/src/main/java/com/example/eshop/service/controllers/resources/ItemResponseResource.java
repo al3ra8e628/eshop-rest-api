@@ -23,6 +23,7 @@ public class ItemResponseResource extends RepresentationModel<ItemResponseResour
     private Boolean isInStock;
     private Integer rating;
     private ItemUnit unit;
+    private String description;
 
     @Schema(type = "string",
             example = "USD 100.00",

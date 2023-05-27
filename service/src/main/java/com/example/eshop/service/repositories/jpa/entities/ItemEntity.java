@@ -4,11 +4,13 @@ import com.example.modals.ItemCategory;
 import com.example.modals.ItemUnit;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
+@Table(name = "items")
 @Entity(name = "items")
 public class ItemEntity {
     @Id
@@ -29,6 +31,8 @@ public class ItemEntity {
     @Column(name = "unit")
     private ItemUnit unit;
 
+    @Column(name = "description")
+    private String description;
     @Column(name = "price_amount")
     private BigDecimal priceAmount;
     @Column(name = "price_currency", length = 7)

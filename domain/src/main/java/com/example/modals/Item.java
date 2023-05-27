@@ -21,6 +21,7 @@ public class Item {
     private ItemUnit unit;
     private Money price;
     private LocalDateTime creationDateTime;
+    private String description;
     private List<Document> pictures;
 
 }
