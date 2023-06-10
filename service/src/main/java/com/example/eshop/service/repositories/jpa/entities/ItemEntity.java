@@ -4,10 +4,10 @@ import com.example.modals.ItemCategory;
 import com.example.modals.ItemUnit;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Table(name = "items")
@@ -40,5 +40,8 @@ public class ItemEntity {
 
     @Column(name = "creation_date")
     private LocalDateTime creationDateTime;
+
+    @OneToMany(mappedBy = "itemEntity" , cascade = CascadeType.ALL)
+    private List<ItemsDocumentEntity> pictures;
 
 }

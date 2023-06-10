@@ -1,6 +1,7 @@
 package com.example.eshop.service.repositories.jpa.adapters;
 
 
+import com.example.contract.services.DocumentsService;
 import com.example.eshop.service.repositories.jpa.JpaItemsRepository;
 import com.example.eshop.service.repositories.jpa.entities.ItemEntity;
 import com.example.eshop.service.repositories.jpa.mappers.ItemEntityMapper;
@@ -21,20 +22,28 @@ import java.util.stream.Collectors;
 @Repository
 @Profile("jpa")
 public class JpaItemsRepositoryAdapter implements ItemsListingRepository {
-    final JpaItemsRepository jpaItemsRepository;
-    final ItemEntityMapper itemEntityMapper;
+    private final JpaItemsRepository jpaItemsRepository;
+    private final ItemEntityMapper itemEntityMapper;
+    private final DocumentsService externalDocumentsService;
 
     public JpaItemsRepositoryAdapter(JpaItemsRepository jpaItemsRepository,
-                                     ItemEntityMapper itemEntityMapper) {
+                                     ItemEntityMapper itemEntityMapper,
+                                     DocumentsService externalDocumentsService) {
         this.jpaItemsRepository = jpaItemsRepository;
         this.itemEntityMapper = itemEntityMapper;
+        this.externalDocumentsService = externalDocumentsService;
     }
 
     @Override
     public Item save(Item item) {
         final ItemEntity itemEntity = itemEntityMapper.toEntity(item);
 
+        //the jpa save will generate id on save call...
         final ItemEntity savedEntity = jpaItemsRepository.save(itemEntity);
+
+        item.setId(savedEntity.getId());
+
+        item.getPictures().forEach(it -> externalDocumentsService.uploadDocument(item, it));
 
         return itemEntityMapper.toDomain(savedEntity);
     }

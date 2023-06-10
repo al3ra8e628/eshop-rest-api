@@ -6,9 +6,10 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 public class Document {
-    private String reference;
-    private String metadata;
-    private String contentType;
-    private byte[] content;
+    private Long id; //localDb
+    private String reference; //document service
+    private String contentType; //document service
+    private String fileName; //local db
+    private byte[] content; //document service.
 
 }

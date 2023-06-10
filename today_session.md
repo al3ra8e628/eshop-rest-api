@@ -163,3 +163,126 @@ Notes:
 
 
 
+
+
+
+
+
+Eshop Documents Service:
+
+Document Controller:
+   1- create document   
+   2- get document 
+
+
+
+
+
+
+
+Eshop App:
+    1- Interface to communicate Documents service.
+    before persisting the service shall invoke the document service to persist the item pictures...
+    when client request to download picture, the download request shall be redirected to document service. 
+
+
+
+
+    Rest call
+    - Rest Tempalte multipart POST / GET / DELETE  
+    - Feign CLient 
+    - WebClient https
+
+
+
+
+cascade type
+master/slave
+item/pictures
+
+
+delete item,  
+
+
+
+ALL, PERSIST, MERGE, REMOVE, REFRESH, DETACH;
+
+
+
+
+
+
+
+
+Eshop Documents Service library 
+
+
+best micro 
+
+
+concerns:
+    1- performance we have here two http calls instead of one.
+    2- i had to handle the communication between eshop and eshop documents.
+    3- i have to communicate with document with specific details that might change in future.
+    4- first i build modular app then sperate to multi mic
+
+
+                                  athontication
+                                                                    athorization
+client ->->->->->->->->->->->->-> API Gateway   ->->->->->->->->->  targeted service  
+mob app                                                               might need lookups from another micro service              
+web                                                                   might need to apply a change on a nother micro service
+another service
+
+create item 
+
+post 
+single 
+
+
+
+
+
+
+
+
+unit testing
+integration testing 
+contract testing, 
+end to end testing
+performance testing
+
+beta
+
+
+
+
+
+
+
+
+
+
+
+modes 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
