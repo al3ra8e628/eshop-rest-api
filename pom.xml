@@ -12,9 +12,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>domain</module>
-        <module>cli-application</module>
-        <module>service</module>
+        <module>eshop-documents</module>
+        <module>items-management</module>
     </modules>
 
     <properties>

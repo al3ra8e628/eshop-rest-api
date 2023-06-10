@@ -1,7 +1,6 @@
 package com.example.eshop.service.repositories.jpa.specifications;
 
 import com.example.eshop.service.repositories.jpa.entities.ItemEntity;
-import jakarta.persistence.criteria.*;
 import net.kaczmarzyk.spring.data.jpa.domain.*;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
