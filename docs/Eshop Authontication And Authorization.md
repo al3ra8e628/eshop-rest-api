@@ -1,0 +1,6 @@
+- create a gateway service.
+- add routes for eshop items management service.
+- add authentication filter to the gateway.
+- add the authorization filter to the item management service.
+- add the user details identity.
+- log created by, modified by, created at, last modified at columns.

@@ -41,7 +41,11 @@ public class ItemEntity {
     @Column(name = "creation_date")
     private LocalDateTime creationDateTime;
 
-
+    /*
+    * another way to map elements as one to many is to use @ElementCollection..
+    * Element connection doesn't work with @Entity class instead it's requiring @Embeddable class with no ID.
+    * */
+    //
     @OneToMany(targetEntity = ItemsPictureEntity.class,
             cascade = CascadeType.ALL,
             orphanRemoval = true)

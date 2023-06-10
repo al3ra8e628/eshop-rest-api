@@ -17,8 +17,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 @Service
-@ConditionalOnProperty(value = "eshop.external-documents-service.enabled",
-        havingValue = "true")
+@ConditionalOnProperty(value = "eshop.documents-service-mode",
+        havingValue = "EXTERNAL")
 public class ExternalDocumentsService implements DocumentsService {
     private final RestTemplate restTemplate;
     private final String documentsServiceUrl;

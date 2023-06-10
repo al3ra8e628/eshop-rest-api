@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/items/{itemId}/pictures")
 public class ItemPicturesController {
+    public static final String ESHOP_ITEM_PICTURE = "ESHOP_ITEM_PICTURE";
     private final ItemsRepository itemsRepository;
     private final ItemResourceMapper itemResourceMapper;
     private final DocumentsService documentsService;
@@ -53,6 +54,12 @@ public class ItemPicturesController {
                                                   @PathVariable String reference) {
         final Document itemPicture = getDocumentItemDocument(itemId, reference);
 
+        itemPicture.setContent(documentsService.getDocument(
+                itemPicture.getReference(),
+                ESHOP_ITEM_PICTURE,
+                itemId + ""
+        ));
+
         final byte[] content = itemPicture.getContent();
 
         final HttpHeaders headers = new HttpHeaders();
@@ -65,6 +72,12 @@ public class ItemPicturesController {
     public Map<String, String> downloadPictureEncoded(@PathVariable Long itemId,
                                                       @PathVariable String reference) {
         final Document document = getDocumentItemDocument(itemId, reference);
+
+        document.setContent(documentsService.getDocument(
+                document.getReference(),
+                "ESHOP_ITEM_PICTURE",
+                itemId + ""
+        ));
 
         final String base64Prefix = String.format("data:%s;base64,", document.getContentType());
 
