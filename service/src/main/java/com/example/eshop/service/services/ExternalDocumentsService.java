@@ -73,7 +73,7 @@ public class ExternalDocumentsService implements DocumentsService {
                               String resourceReference) {
         //prepare request URL
         final String getDocumentUrl = documentsServiceUrl + "/api/v1/documents/%s/%s/%s"
-                .formatted(resourceType, documentReference, resourceReference);
+                .formatted(resourceType, resourceReference, documentReference);
 
 
         //prepare headers
@@ -102,6 +102,7 @@ public class ExternalDocumentsService implements DocumentsService {
     private static HashMap<String, String> prepareRequestBody(Item item, Document document) {
         final HashMap<String, String> requestBody = new HashMap<>();
         requestBody.put("resourceReference", item.getId() + "");
+        requestBody.put("documentReference", document.getReference() + "");
         requestBody.put("resourceType", "ESHOP_ITEM_PICTURE");
         requestBody.put("contentType", document.getContentType());
         requestBody.put("metaData", "CREATED AT " + LocalDate.now());

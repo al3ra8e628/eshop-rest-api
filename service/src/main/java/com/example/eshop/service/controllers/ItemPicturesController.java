@@ -1,6 +1,7 @@
 package com.example.eshop.service.controllers;
 
 import com.example.contract.repositories.ItemsRepository;
+import com.example.contract.services.DocumentsService;
 import com.example.eshop.service.controllers.resources.DocumentResponseResource;
 import com.example.eshop.service.exceptions.ResourceNotFoundException;
 import com.example.eshop.service.resourcemappers.ItemResourceMapper;
@@ -27,11 +28,14 @@ import java.util.stream.Collectors;
 public class ItemPicturesController {
     private final ItemsRepository itemsRepository;
     private final ItemResourceMapper itemResourceMapper;
+    private final DocumentsService documentsService;
 
     public ItemPicturesController(ItemsRepository itemsRepository,
-                                  ItemResourceMapper itemResourceMapper) {
+                                  ItemResourceMapper itemResourceMapper,
+                                  DocumentsService documentsService) {
         this.itemsRepository = itemsRepository;
         this.itemResourceMapper = itemResourceMapper;
+        this.documentsService = documentsService;
     }
 
     @GetMapping()

@@ -36,7 +36,7 @@ public interface ItemResourceMapper {
             throw new RuntimeException(e);
         }
 
-        documentCreateRequest.setMetadata("file name:" + document.getOriginalFilename());
+        documentCreateRequest.setFileName(document.getOriginalFilename());
         documentCreateRequest.setContentType(document.getContentType());
         return documentCreateRequest;
     }

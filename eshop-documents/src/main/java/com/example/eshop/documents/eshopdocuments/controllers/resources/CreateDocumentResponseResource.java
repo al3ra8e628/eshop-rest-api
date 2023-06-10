@@ -6,6 +6,7 @@ import lombok.Data;
 public class CreateDocumentResponseResource {
     private Long id;
     private String resourceReference;
+    private String documentReference;
     private String resourceType;
     private String contentType;
     private String metaData;

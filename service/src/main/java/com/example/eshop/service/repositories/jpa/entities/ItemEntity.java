@@ -14,7 +14,7 @@ import java.util.List;
 @Entity(name = "items")
 public class ItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
     @Column(name = "name", length = 30)
@@ -41,7 +41,10 @@ public class ItemEntity {
     @Column(name = "creation_date")
     private LocalDateTime creationDateTime;
 
-    @OneToMany(mappedBy = "itemEntity" , cascade = CascadeType.ALL)
-    private List<ItemsDocumentEntity> pictures;
+
+    @OneToMany(targetEntity = ItemsPictureEntity.class,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<ItemsPictureEntity> pictures;
 
 }

@@ -11,6 +11,7 @@ public class DocumentEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String resourceReference;
+    private String documentReference;
     private String resourceType;
     @Lob
     private byte[] content;

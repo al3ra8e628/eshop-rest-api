@@ -4,12 +4,11 @@ import lombok.Data;
 
 @Data
 public class CreateDocumentRequestResource {
-
     private String resourceReference;
+    private String documentReference;
     private String contentType;
     private String resourceType;
     private String metaData;
-
 
 }
 

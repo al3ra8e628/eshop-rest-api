@@ -33,7 +33,7 @@ public class DocumentsController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CreateDocumentResponseResource createDocument(
             @RequestPart("requestBody") String requestBody,
-            @RequestPart("document") byte [] document) {
+            @RequestPart("document") byte[] document) {
         final CreateDocumentRequestResource requestResource =
                 objectMapper.readValue(requestBody,
                         CreateDocumentRequestResource.class);
@@ -46,14 +46,15 @@ public class DocumentsController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_OCTET_STREAM_VALUE,
-            value = "/{resourceType}/{documentId}/{resourceReference}")
+            value = "/{resourceType}/{resourceReference}/{documentReference}")
     public byte[] getDocument(@PathVariable String resourceType,
-                              @PathVariable Long documentId,
-                              @PathVariable String resourceReference) {
+                              @PathVariable String resourceReference,
+                              @PathVariable String documentReference) {
         final Optional<DocumentEntity> document = documentsRepository
-                .findFirstByIdAndResourceTypeAndResourceReference(documentId,
+                .findFirstByResourceTypeAndResourceReferenceAndDocumentReference(
                         resourceType,
-                        resourceReference);
+                        resourceReference,
+                        documentReference);
 
         if (document.isEmpty()) {
             throw new ResourceNotFoundException();
@@ -72,6 +73,7 @@ public class DocumentsController {
         documentEntity.setMetaData(requestResource.getMetaData());
         documentEntity.setResourceType(requestResource.getResourceType());
         documentEntity.setResourceReference(requestResource.getResourceReference());
+        documentEntity.setDocumentReference(requestResource.getDocumentReference());
 
         return documentEntity;
     }
@@ -91,6 +93,7 @@ public class DocumentsController {
         responseResource.setId(entity.getId());
         responseResource.setMetaData(entity.getMetaData());
         responseResource.setResourceReference(entity.getResourceReference());
+        responseResource.setDocumentReference(entity.getResourceReference());
         responseResource.setContentType(entity.getContentType());
 
         return responseResource;

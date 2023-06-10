@@ -4,16 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@Entity(name = "item_documents")
-public class ItemsDocumentEntity {
+@Entity
+public class ItemsPictureEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
     private String reference;
+    private String contentType;
     private String fileName;
-
-    @ManyToOne(targetEntity = ItemEntity.class)
-    private ItemEntity itemEntity;
 
 }
