@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +46,8 @@ public class DocumentsController {
         return toResponseResource(savedEntity);
     }
 
+
+    @Transactional
     @GetMapping(produces = MediaType.APPLICATION_OCTET_STREAM_VALUE,
             value = "/{resourceType}/{resourceReference}/{documentReference}")
     public byte[] getDocument(@PathVariable String resourceType,

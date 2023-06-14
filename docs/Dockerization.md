@@ -22,6 +22,18 @@ to list all active containers
 to remove active container by id
 5- docker exec -it da0fdd2d1862 bash
 to open a shell session inside the container.
+6- docker logs container_id 
+to print the container logs
+6- docker logs -f container_id
+to print the container logs with following to print any new execution logs.
+7- to build docker image from docker Dockerfile
+docker build -t image-name:image-tag .
+
+
+
+docker build -t items-management:v1.0.0 .
+
+
 
 
 3- pull and run postgres db by docker.
@@ -40,3 +52,7 @@ docker run -itd -e POSTGRES_USER=eshop_documents -e POSTGRES_PASSWORD=eshop_docu
 6- apply same for eshop app.
 
 7- run all services by docker compose.
+
+
+
+

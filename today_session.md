@@ -89,6 +89,30 @@ simplest OT.
 
 
 
+automate running two docker containers of the postgres image 
+1- item-management-db
+2- eshop-documents-db
+3- by using docker-compose
+4- build dockerFile for items management
+5- build dockerFile for eshop documents
+6- run the whole services with docker compose
+-----------------------
+manage the transactional state between item management persistence and documents persistence 
+-----------------------
+7- add gateway service to route http calls to internal micro services
+8- apply authentication on the gateway so that only permitted user can access the micro services
+9- apply the authorization on each micro service
+10- add more functions that will allow us to practice different technologies like message brokers
+
+
+
+
+direct    
+             sync call
+entity1 <----------------> entity2
+
+              async call
+entity2 ------------------------>  group(e1, e2, e3, e4)
 
 
 
@@ -96,6 +120,21 @@ simplest OT.
 
 
 
+
+
+
+
+
+to manage:
+1- scalability (H, V).
+2- availability (auto restart on failure).
+3- to automate the process.
+4- to secrets.
+5- to manage the state.
+
+docker-compose.yaml 
+
+docker-compose up
 
 
 
