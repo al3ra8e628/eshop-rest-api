@@ -141,3 +141,107 @@ docker-compose up
 
 
 
+
+
+
+
+1- practice docker compose..
+2- @Transactional
+3- gateway netflix zull gateway
+4- identity provider (spring boot service, login/registration (JWT), manage users) ///  two options 
+5- integrate the zull gateway with the identity provider to manage the authentication
+6- implement the authorization for item-management && eshop documents
+7- message brokers...
+
+
+
+
+
+
+
+
+item table , item_images table
+
+thread 1
+phase one () { 
+processing
+db operation (read(big objects, read with update), write......)  -> open a new transaction...  
+processing
+}
+phase two () { 
+processing
+db operation (read(big objects, read with update), write......)  -> reuse the opened transaction
+processing
+}
+response
+processing opening a new thread with db changes
+COMMIT
+
+on in case the above commit proceeded new thread 
+
+
+ibox/outbox pattern...
+
+
+outbox
+save the document to another service 
+
+ID | out handler   | content  | status     | retries 
+1  | save document | payload  | processed  | 0
+
+job 
+
+ROLLBACK revert changes till the last commit.
+
+
+item is not 
+
+item loading.......
+
+item inserting flow
+
+phase created
+phase pictures saved
+phase ready to use 
+
+
+
+
+new thread -->
+     join multiple threads
+
+
+
+
+
+
+
+
+
+processing takes much 
+
+
+
+http -> prcessing takes 15mins
+
+
+at mint one i need to commit something.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

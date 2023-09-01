@@ -8,6 +8,7 @@ import com.example.modals.Item;
 import com.example.validators.ItemRequestValidator;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 /*
@@ -49,7 +50,13 @@ public class CreateItemUseCase {
     }
 
     private Item persistToRepository(Item item) {
-        return itemsRepository.save(item);
+        Item save = itemsRepository.save(item);
+
+        if (!Objects.isNull(save)) {
+            throw new RuntimeException();
+        }
+
+        return save;
     }
 
     private CreateItemResponse mapToResponse(Item item) {

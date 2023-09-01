@@ -29,6 +29,14 @@ to print the container logs with following to print any new execution logs.
 7- to build docker image from docker Dockerfile
 docker build -t image-name:image-tag .
 
+docker-compose:
+1- docker-compose up 
+pull, build and run docker compose services
+2- docker-compose up --scale items-management=2
+to run service with more than one instance, NOTE: ports should not be specified for this service.
+
+
+docker push 
 
 
 docker build -t items-management:v1.0.0 .

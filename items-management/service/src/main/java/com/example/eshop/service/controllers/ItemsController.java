@@ -3,7 +3,6 @@ package com.example.eshop.service.controllers;
 
 import com.example.contract.requests.CreateItemRequest;
 import com.example.contract.requests.UpdateItemRequest;
-import com.example.contract.responses.CreateItemResponse;
 import com.example.eshop.service.controllers.resources.CreateItemRequestResource;
 import com.example.eshop.service.controllers.resources.ItemResponseResource;
 import com.example.eshop.service.exceptions.ResourceNotFoundException;
@@ -24,6 +23,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,6 +38,8 @@ public class ItemsController {
     private final CreateItemUseCase createItemUseCase;
     private final UpdateItemUseCase updateItemUseCase;
     private final ItemResourceMapper itemResourceMapper;
+
+    private final CreateItemService createItemService;
     private final PagedResourcesAssembler pagedResourcesAssembler;
     private final ObjectMapper objectMapper;
 
@@ -45,12 +47,14 @@ public class ItemsController {
                            CreateItemUseCase createItemUseCase,
                            UpdateItemUseCase updateItemUseCase,
                            ItemResourceMapper itemResourceMapper,
+                           CreateItemService createItemService,
                            PagedResourcesAssembler pagedResourcesAssembler,
                            ObjectMapper objectMapper) {
         this.itemsRepository = itemsRepository;
         this.createItemUseCase = createItemUseCase;
         this.updateItemUseCase = updateItemUseCase;
         this.itemResourceMapper = itemResourceMapper;
+        this.createItemService = createItemService;
         this.pagedResourcesAssembler = pagedResourcesAssembler;
         this.objectMapper = objectMapper;
     }
@@ -60,7 +64,7 @@ public class ItemsController {
             description = "create a new eshop item desc.")
     @ResponseStatus(HttpStatus.CREATED)
     public ItemResponseResource createItem(@RequestBody CreateItemRequestResource itemRequest) {
-        return createItem(
+        return createItemService.createItem(
                 itemResourceMapper.toCreateItemRequest(itemRequest)
         );
     }
@@ -78,7 +82,7 @@ public class ItemsController {
                 .collect(Collectors.toList())
         );
 
-        return createItem(createItemRequest);
+        return createItemService.createItem(createItemRequest);
     }
 
     @GetMapping()
@@ -149,12 +153,6 @@ public class ItemsController {
         return resource;
     }
 
-    private ItemResponseResource createItem(CreateItemRequest createItemRequest) {
-        final CreateItemResponse createItemResponse = createItemUseCase.execute(createItemRequest);
 
-        final ItemResponseResource itemResponseResource = itemResourceMapper.toResource(createItemResponse);
-
-        return addResourceLinks(itemResponseResource);
-    }
 
 }
