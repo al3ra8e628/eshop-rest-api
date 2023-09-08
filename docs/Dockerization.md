@@ -27,7 +27,15 @@ to print the container logs
 6- docker logs -f container_id
 to print the container logs with following to print any new execution logs.
 7- to build docker image from docker Dockerfile
-docker build -t image-name:image-tag .
+   docker build -t image-name:image-tag .
+
+8- docker image push:
+    - create account on docker hub
+    - login to your account at docker hub.
+    - create a tag for local image to the image on the registry -> 
+      docker tag eshop-api:v1.0.0 albayati/eshop-api:v1.0.0
+    - execute the docker push command
+      albayati/eshop-api:v1.0.0
 
 docker-compose:
 1- docker-compose up 

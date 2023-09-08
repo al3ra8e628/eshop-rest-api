@@ -4,7 +4,6 @@
 
 ```text
 practices:
-
 1- create the api gateway service.
 2- create the routes.
 3- create the docker file and build docker image.
