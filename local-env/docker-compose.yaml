@@ -1,21 +1,19 @@
 version: "3.7"
 
 services:
-#  eshop-api:
-#    image: eshop-api:v1.0.0
-#    ports:
-#      - "9060:8080"
-#    restart: no
-#    environment:
-#      items_management_host: items-management
-#      items_management_port: 8080
-#      eshop_documents_host: eshop-documents
-#      eshop_documents_port: 8080
+  eshop-api:
+    image: eshop-api:v1.0.0
+    ports:
+      - "9060:8080"
+    restart: no
+    environment:
+      items_management_host: items-management
+      items_management_port: 8080
+      eshop_documents_host: eshop-documents
+      eshop_documents_port: 8080
 
   eshop-documents:
     image: eshop-documents:v1.0.0
-    ports:
-      - "9082:8080"
     restart: no
     environment:
       SPRING_PROFILES_INCLUDE: postgres

@@ -9,7 +9,6 @@ practices:
 3- create the docker file and build docker image.
 4- add the api gateway service to docker-compose.
 5- use web filters. 
-
 6- compare calling the items management service with and without api.
 7- make the item management service not accessible from outside the docker compose env.
 8- apply an example of creating custom gateway predicate.
