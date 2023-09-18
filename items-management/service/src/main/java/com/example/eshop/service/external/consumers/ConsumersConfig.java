@@ -1,38 +1,28 @@
 package com.example.eshop.service.external.consumers;
 
-import com.example.eshop.service.external.consumers.StockItemUpdateEventHandler.UpdateItemStockEvent;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.eshop.service.inbox.InboxEntity;
+import com.example.eshop.service.inbox.InboxService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.function.Consumer;
 
+@Slf4j
 @Configuration
 public class ConsumersConfig {
 
     @Bean
-    public Consumer<Message<String>> stockUpdate(StockItemUpdateEventHandler handler, ObjectMapper objectMapper) {
+    public Consumer<Message<String>> stockUpdate(InboxService inboxService) {
         return message -> {
             try {
-                final UpdateItemStockEvent updateItemStockEvent = objectMapper.readValue(
-                        message.getPayload(), UpdateItemStockEvent.class);
-
-
-                handler.handle(updateItemStockEvent);
-                throw new RuntimeException("asda");
-
-                //inbox design pattern....
-                //db table inbox...
-                //spring schedulers  job 5 seconds.... handle the pending inboxes.
-
+                inboxService.save(InboxEntity.of(
+                        "STOCK_ITEM_STATUS_UPDATED", message.getPayload()));
+                LOGGER.info("message saved to inbox to be processed, message {}" , message);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         };
     }
 
