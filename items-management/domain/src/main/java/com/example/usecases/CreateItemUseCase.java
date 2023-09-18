@@ -52,7 +52,7 @@ public class CreateItemUseCase {
     private Item persistToRepository(Item item) {
         Item save = itemsRepository.save(item);
 
-        if (!Objects.isNull(save)) {
+        if (Objects.isNull(save)) {
             throw new RuntimeException();
         }
 

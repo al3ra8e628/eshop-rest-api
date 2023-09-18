@@ -52,3 +52,5 @@ public class ItemEntity {
     private List<ItemsPictureEntity> pictures;
 
 }
+
+

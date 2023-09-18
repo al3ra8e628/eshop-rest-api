@@ -26,7 +26,7 @@ public class UpdateItemUseCase {
 
         final Item updatedItem = applyUpdates(original, updateItemRequest);
 
-        itemsRepository.save(updatedItem);
+        itemsRepository.update(updatedItem);
 
         return itemDomainMapper.toUpdateResponse(updatedItem);
     }

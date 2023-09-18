@@ -5,6 +5,7 @@ import lombok.*;
 import java.util.Set;
 
 @Getter
+@ToString
 public class DomainValidationException extends RuntimeException {
     private final Set<ValidationErrorDetails> validationErrors;
 

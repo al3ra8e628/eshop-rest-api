@@ -28,6 +28,16 @@ public class InMemoryItemsRepository implements ItemsRepository {
     }
 
     @Override
+    public Item update(Item item) {
+        if (Objects.isNull(item.getId())) {
+            item.setId(itemsTable.keySet().stream().max(Long::compareTo).orElse(0L) + 1);
+        }
+
+        itemsTable.put(item.getId(), item);
+
+        return item;    }
+
+    @Override
     public List<Item> listAll(Item filterExample) {
         return new ArrayList<>(itemsTable.values().stream()
                 .filter(it -> Objects.isNull(filterExample.getCategory()) ||

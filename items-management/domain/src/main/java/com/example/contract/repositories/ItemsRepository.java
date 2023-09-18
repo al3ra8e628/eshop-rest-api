@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface ItemsRepository {
     Item save(Item item);
 
+    Item update(Item item);
+
     List<Item> listAll(Item filterExample);
 
     Item findById(Long id);

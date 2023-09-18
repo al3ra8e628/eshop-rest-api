@@ -6,6 +6,7 @@ import com.example.eshop.service.configs.serializationconfig.MoneySerializer;
 import com.example.mappers.ItemDomainMapper;
 import com.example.mappers.ItemDomainMapperImpl;
 import com.example.usecases.CreateItemUseCase;
+import com.example.usecases.UpdateItemInStockStatusUseCase;
 import com.example.usecases.UpdateItemUseCase;
 import com.example.validators.CreateItemValidator;
 import com.example.validators.UpdateItemValidator;
@@ -30,6 +31,10 @@ public class AppBeansConfig {
         return new UpdateItemUseCase(createItemValidator, itemsRepository, itemDomainMapper);
     }
 
+    @Bean
+    UpdateItemInStockStatusUseCase updateItemInStockStatusUseCase(ItemsRepository itemsRepository) {
+        return new UpdateItemInStockStatusUseCase(itemsRepository);
+    }
 
     @Bean
     ItemDomainMapper itemDomainMapper() {

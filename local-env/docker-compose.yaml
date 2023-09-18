@@ -25,6 +25,8 @@ services:
   eshop-documents:
     image: eshop-documents:v1.0.0
     restart: no
+    ports:
+      - "9082:8080"
     environment:
       SPRING_PROFILES_INCLUDE: postgres
       SPRING_DATASOURCE_URL: jdbc:postgresql://eshop-document-db:5432/postgres

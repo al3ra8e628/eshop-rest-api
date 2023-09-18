@@ -51,6 +51,18 @@ public class JpaItemsRepositoryAdapter implements ItemsListingRepository {
     }
 
     @Override
+    public Item update(Item item) {
+        final ItemEntity itemEntity = itemEntityMapper.toEntity(item);
+
+        //the jpa save will generate id on save call...
+        final ItemEntity savedEntity = jpaItemsRepository.save(itemEntity);
+
+        item.setId(savedEntity.getId());
+
+        return itemEntityMapper.toDomain(savedEntity);
+    }
+
+    @Override
     public List<Item> listAll(Item filterExample) {
         final ItemEntity itemEntity = itemEntityMapper.toEntity(filterExample);
 
