@@ -11,17 +11,17 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  eshop-api:
-    image: eshop-api:v1.0.0
-    ports:
-      - "9060:8080"
-    restart: no
-    environment:
-      items_management_host: items-management
-      items_management_port: 8080
-      eshop_documents_host: eshop-documents
-      eshop_documents_port: 8080
-
+#  eshop-api:
+#    image: eshop-api:v1.0.0
+#    ports:
+#      - "9060:8080"
+#    restart: no
+#    environment:
+#      items_management_host: items-management
+#      items_management_port: 8080
+#      eshop_documents_host: eshop-documents
+#      eshop_documents_port: 8080
+#
   eshop-documents:
     image: eshop-documents:v1.0.0
     restart: no
@@ -31,16 +31,16 @@ services:
       SPRING_PROFILES_INCLUDE: postgres
       SPRING_DATASOURCE_URL: jdbc:postgresql://eshop-document-db:5432/postgres
 
-  items-management:
-    image: albayati/items-management:v1.0.1
-    restart: no
-    ports:
-      - "9081:8080"
-    environment:
-      SPRING_PROFILES_INCLUDE: postgres
-      SPRING_DATASOURCE_URL: jdbc:postgresql://item-management-db:5432/postgres
-      ESHOP_DOCUMENTS_SERVICE_URL: http://eshop-documents:8080
-
+#  items-management:
+#    image: albayati/items-management:v1.0.1
+#    restart: no
+#    ports:
+#      - "9081:8080"
+#    environment:
+#      SPRING_PROFILES_INCLUDE: postgres
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://item-management-db:5432/postgres
+#      ESHOP_DOCUMENTS_SERVICE_URL: http://eshop-documents:8080
+#
   eshop-document-db:
     image: postgres
     ports:
@@ -50,14 +50,14 @@ services:
       POSTGRES_USER: eshop_documents_db
       POSTGRES_PASSWORD: eshop_documents_db
 
-  item-management-db:
-    image: postgres
-    ports:
-      - "5434:5432"
-    restart: on-failure
-    environment:
-      POSTGRES_USER: item_management_db
-      POSTGRES_PASSWORD: item_management_db
+#  item-management-db:
+#    image: postgres
+#    ports:
+#      - "5434:5432"
+#    restart: on-failure
+#    environment:
+#      POSTGRES_USER: item_management_db
+#      POSTGRES_PASSWORD: item_management_db
 
 #
 #  oracle-items-management:

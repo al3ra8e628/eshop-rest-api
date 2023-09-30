@@ -23,5 +23,7 @@ public class Item {
     private LocalDateTime creationDateTime;
     private String description;
     private List<Document> pictures;
+    private String createdBy;
+    private String updatedBy;
 
 }

@@ -38,6 +38,11 @@ public class ItemEntity {
     @Column(name = "price_currency", length = 7)
     private String priceCurrency;
 
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "updated_by")
+    private String updatedBy;
+
     @Column(name = "creation_date")
     private LocalDateTime creationDateTime;
 
@@ -48,7 +53,7 @@ public class ItemEntity {
     //
     @OneToMany(targetEntity = ItemsPictureEntity.class,
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = false)
     private List<ItemsPictureEntity> pictures;
 
 }
