@@ -1,5 +1,6 @@
 package com.example.stockmanagement;
 
+import com.example.eshop.contract.UserIdentityProvider;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +14,12 @@ import java.time.LocalDateTime;
 @RestController
 public class StockItemsController {
     private final EventsPublisher eventsPublisher;
+    private final UserIdentityProvider userIdentityProvider;
 
-    public StockItemsController(EventsPublisher eventsPublisher) {
+    public StockItemsController(EventsPublisher eventsPublisher,
+                                UserIdentityProvider userIdentityProvider) {
         this.eventsPublisher = eventsPublisher;
+        this.userIdentityProvider = userIdentityProvider;
     }
 
     @SneakyThrows
@@ -23,9 +27,9 @@ public class StockItemsController {
     public UpdateItemStockEvent updateStockItemStatus(@RequestBody UpdateStockItemStatusRequest request) {
         final UpdateItemStockEvent updateItemStockEvent = toUpdateEvent(request);
 
+        System.out.println(userIdentityProvider.getCurrentUserIdentity().getUsername());
+
         eventsPublisher.publishEvent(updateItemStockEvent);
-
-
 
         return updateItemStockEvent;
     }

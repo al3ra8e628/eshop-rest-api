@@ -1,6 +1,6 @@
-package com.example.contract.services;
+package com.example.eshop.contract;
 
-import com.example.modals.UserIdentity;
+import com.example.eshop.models.UserIdentity;
 
 public interface UserIdentityProvider {
 

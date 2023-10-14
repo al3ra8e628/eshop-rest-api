@@ -36,6 +36,11 @@
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>eshop-user-identity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

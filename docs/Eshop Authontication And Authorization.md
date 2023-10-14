@@ -5,8 +5,7 @@
 ##Identity Management Solutions:
 1. Microsoft Azure Active Directory.
 2. AWS Services.
-3. AWS Services.
-4. Keycloak.
+4. Keycloak. 
 
 
 ###OAuth2 Identity Management.
@@ -38,6 +37,17 @@ services:
 ```
 - configure keycloak realm, client, users, roles by following this article.  
   https://czetsuya.medium.com/generate-keycloak-bearer-token-using-postman-5bd81d7d1f8
+
+
+realm -> eshopApp , ERP
+clients -> mobile, web, internal 
+user -> password, username , email , lastLoginTime , currentLoginAttemp.
+roles -> normal role, composite roles.  (creator  , (creator + viewer)).
+groups -> user to be assign to specific group.
+
+group -> eshop_items_creators (user1, user2) , roles (creator)
+
+expiration , validate issuer, validate singing key...  
 
 
 ###API Gateway:

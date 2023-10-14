@@ -1,6 +1,7 @@
-package com.example.eshop.service.security;
+package com.example.eshop.security;
 
-import com.example.modals.UserIdentity;
+
+import com.example.eshop.models.UserIdentity;
 
 public class UserIdentityContext {
     private static final ThreadLocal<UserIdentity> userIdentityContext = new ThreadLocal<>();

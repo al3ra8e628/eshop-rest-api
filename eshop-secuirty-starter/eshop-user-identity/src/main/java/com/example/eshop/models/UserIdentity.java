@@ -1,4 +1,4 @@
-package com.example.modals;
+package com.example.eshop.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

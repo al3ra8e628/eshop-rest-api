@@ -3,7 +3,8 @@ package com.example.eshop.service.controllers;
 
 import com.example.contract.requests.CreateItemRequest;
 import com.example.contract.requests.UpdateItemRequest;
-import com.example.contract.services.UserIdentityProvider;
+import com.example.eshop.contract.UserIdentityProvider;
+import com.example.eshop.models.UserIdentity;
 import com.example.eshop.service.controllers.resources.CreateItemRequestResource;
 import com.example.eshop.service.controllers.resources.ItemResponseResource;
 import com.example.eshop.service.exceptions.ResourceNotFoundException;
@@ -12,11 +13,9 @@ import com.example.eshop.service.repositories.lsitingrepositories.ItemsListingRe
 import com.example.eshop.service.resourcemappers.ItemResourceMapper;
 import com.example.modals.Item;
 import com.example.modals.ItemCategory;
-import com.example.modals.UserIdentity;
 import com.example.usecases.CreateItemUseCase;
 import com.example.usecases.UpdateItemUseCase;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

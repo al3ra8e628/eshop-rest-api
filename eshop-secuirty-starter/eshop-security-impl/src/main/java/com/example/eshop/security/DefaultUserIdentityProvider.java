@@ -1,9 +1,8 @@
-package com.example.eshop.service.services;
+package com.example.eshop.security;
 
 
-import com.example.contract.services.UserIdentityProvider;
-import com.example.eshop.service.security.UserIdentityContext;
-import com.example.modals.UserIdentity;
+import com.example.eshop.contract.UserIdentityProvider;
+import com.example.eshop.models.UserIdentity;
 import org.springframework.stereotype.Component;
 
 @Component

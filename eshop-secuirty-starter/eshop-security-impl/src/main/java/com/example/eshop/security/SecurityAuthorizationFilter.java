@@ -1,6 +1,7 @@
-package com.example.eshop.service.security;
+package com.example.eshop.security;
 
-import com.example.modals.UserIdentity;
+import com.example.eshop.models.UserIdentity;
+import com.example.eshop.models.UserIdentity.*;
 import com.jayway.jsonpath.JsonPath;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,6 +63,14 @@ public class SecurityAuthorizationFilter implements Filter {
         try {
             authorizationHeader = authorizationHeader.replace("Bearer ", "");
 
+            /*
+            * alg details    base 64
+            * .
+            * claims   base 64
+            * .
+            * token details  base 64
+            * */
+
             byte[] decodedUserDetailsSection = Base64.getDecoder().decode(
                     authorizationHeader.split("\\.")[1]);
 
@@ -73,7 +82,9 @@ public class SecurityAuthorizationFilter implements Filter {
 
             final List<String> userRoles = readValue(userDetails, "$.role");
 
+            //the user roles in the spring security type.
             final List<GrantedAuthority> authorities = new ArrayList<>();
+
 
             for (String userRole : Optional.ofNullable(userRoles)
                     .orElse(new ArrayList<>())) {

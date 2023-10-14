@@ -2,7 +2,7 @@ package com.example.eshop.service.repositories.jpa.adapters;
 
 
 import com.example.contract.services.DocumentsService;
-import com.example.contract.services.UserIdentityProvider;
+import com.example.eshop.contract.UserIdentityProvider;
 import com.example.eshop.service.repositories.jpa.JpaItemsRepository;
 import com.example.eshop.service.repositories.jpa.entities.ItemEntity;
 import com.example.eshop.service.repositories.jpa.mappers.ItemEntityMapper;
